@@ -7,14 +7,20 @@
 .header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
-.header > * {
+.info {
+  display: flex;
+  align-items: center;
+}
+
+.info > * {
   margin-right: 0.5em;
 }
 
 .avatar > img {
-  max-height: 48px;
+  max-height: 32px;
   border-radius: 50%;
 }
 

@@ -4,3 +4,22 @@
   overflow: auto;
   position: relative;
 }
+
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.login {
+  display: flex;
+  align-items: center;
+}
+
+.login > * {
+  margin: 0 0.5em;
+}
+
+.login > img {
+  max-height: 48px;
+  border-radius: 50%;
+}

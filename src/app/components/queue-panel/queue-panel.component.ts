@@ -18,6 +18,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class QueuePanelComponent implements OnInit {
   queue: Observable<any[]>;
+  environment = environment;
+
   constructor(
     public authService: AuthService,
     public queueService: QueueService,

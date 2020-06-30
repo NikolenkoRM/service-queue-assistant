@@ -9,10 +9,12 @@
         <app-queue-item
           *ngFor="let item of queueService.queue; let i = index"
           [n]="i + 1"
+          [id]="item.id"
           [name]="item.name"
           [avatar]="item.avatar"
           [text]="item.text"
           [created]="item.created"
+          [canRemove]="authService.user.display_name === item.name || authService.user.display_name === environment.streamer"
         ></app-queue-item>
       </div>
       <button mat-flat-button color="primary" [disabled]="!queueService.settings?.status" (click)="addInQueue()">

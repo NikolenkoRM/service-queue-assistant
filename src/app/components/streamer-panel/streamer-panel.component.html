@@ -17,25 +17,26 @@
     <p *ngIf="!current">Нет активного сервиса</p>
     <app-queue-item
       *ngIf="current"
+      [id]="current.id"
       [name]="current.name"
       [avatar]="current.avatar"
       [text]="current.text"
       [created]="current.created"
     ></app-queue-item>
     <button mat-flat-button color="primary" (click)="next()">
-      Следующая заявка
+      Следующий сервис
     </button>
-    <button mat-flat-button color="primary">
+    <!-- <button mat-flat-button color="primary">
       История
-    </button>
+    </button> -->
   </div>
 
   <div class="settings">
     <h2>Настройки очереди</h2>
     <mat-slide-toggle [checked]="settings.onlyFollowers">Только для фолловеров</mat-slide-toggle>
-    <mat-slide-toggle [checked]="settings.subQueue">Отдельная очередь для сабов</mat-slide-toggle>
+    <mat-slide-toggle [checked]="settings.subQueue">В первую очередь сабы</mat-slide-toggle>
     <br />
-    <button mat-flat-button [color]="settings.status ? 'warn' : 'accent'" (click)="toggleQueue()">
+    <button mat-flat-button [color]="settings.status ? 'warn' : 'primary'" (click)="toggleQueue()">
       {{ settings.status ? 'Остановить очередь' : 'Запустить очередь' }}
     </button>
   </div>

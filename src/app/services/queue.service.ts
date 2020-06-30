@@ -74,9 +74,21 @@ export class QueueService {
     const nextService = this.queue[0];
     if (nextService) {
       await this.firestore.collection('current').doc('current').set(nextService);
-      await this.firestore.collection('queue').doc(nextService.id).delete();
+      await this.removeQueueItem(nextService.id);
     }
 
     return;
+  }
+
+  removeQueueItem(id: string) {
+    return this.firestore.collection('queue').doc(id).delete();
+  }
+
+  sortQueue() {
+    if (this.settings.subQueue) {
+      this.queue = this.queue.sort((a, b) => {
+        return +(a.sub > b.sub) - 1;
+      });
+    }
   }
 }

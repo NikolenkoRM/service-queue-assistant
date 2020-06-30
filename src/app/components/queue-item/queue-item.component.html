@@ -1,14 +1,15 @@
 <div class="content">
   <div class="header">
-    <h1 *ngIf="n">
-      <b>{{ n }}</b>
-    </h1>
-    <div class="avatar">
-      <img [src]="avatar" />
-    </div>
     <div class="info">
-      <h3>{{ name }}</h3>
+      <b *ngIf="n">{{ n }}</b>
+      <div class="avatar">
+        <img [src]="avatar" />
+      </div>
+      <b>{{ name }}</b>
     </div>
+    <button mat-icon-button color="warn" *ngIf="canRemove" (click)="remove()">
+      <mat-icon>delete</mat-icon>
+    </button>
   </div>
   <div class="desc">
     <p>{{ text }}</p>

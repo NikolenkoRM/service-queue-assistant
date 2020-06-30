@@ -1,4 +1,10 @@
-<mat-toolbar color="primary">Queue Assistant</mat-toolbar>
+<mat-toolbar color="primary">
+  <h1>Service Queue Assistant</h1>
+  <div class="login" *ngIf="authService.user">
+    <b>{{ authService.user.display_name }}</b>
+    <img [src]="authService.user.logo" />
+  </div>
+</mat-toolbar>
 
 <div class="content">
   <router-outlet></router-outlet>

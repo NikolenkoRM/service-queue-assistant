@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { QueueService } from 'src/app/services/queue.service';
 
 @Component({
   selector: 'app-queue-item',
@@ -7,11 +8,19 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class QueueItemComponent implements OnInit {
   @Input() n?: number;
+  @Input() id: string;
   @Input() name: string;
   @Input() avatar: string;
   @Input() text: string;
   @Input() created: Date;
-  constructor() {}
+
+  @Input() canRemove: boolean = false;
+
+  constructor(private queueService: QueueService) {}
 
   ngOnInit(): void {}
+
+  remove() {
+    this.queueService.removeQueueItem(this.id);
+  }
 }
