@@ -1,0 +1,19 @@
+<div class="content">
+  <div class="header">
+    <h1 *ngIf="n">
+      <b>{{ n }}</b>
+    </h1>
+    <div class="avatar">
+      <img [src]="avatar" />
+    </div>
+    <div class="info">
+      <h3>{{ name }}</h3>
+    </div>
+  </div>
+  <div class="desc">
+    <p>{{ text }}</p>
+  </div>
+  <!-- <div>
+    <span class="datetime">{{ created | date: 'dd.MM.yy HH:mm:ss' }}</span>
+  </div> -->
+</div>

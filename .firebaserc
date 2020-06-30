@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "service-queue-assistant": {
+      "hosting": {
+        "service-queue-assistant": [
+          "service-queue-assistant"
+        ]
+      }
+    }
+  }
+}

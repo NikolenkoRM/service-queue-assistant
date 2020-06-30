@@ -1,0 +1,24 @@
+.content {
+  padding: 1em;
+  background-color: white;
+  border-bottom: 1px solid lightgray;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.header > * {
+  margin-right: 0.5em;
+}
+
+.avatar > img {
+  max-height: 48px;
+  border-radius: 50%;
+}
+
+.datetime {
+  font-size: small;
+  color: gray;
+}

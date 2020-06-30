@@ -1,0 +1,42 @@
+<div class="content" *ngIf="streamer && channel && settings">
+  <div class="streamer-info">
+    <div class="avatar">
+      <img [src]="streamer.logo" alt="streamer" />
+    </div>
+    <div class="info">
+      <b class="name">{{ streamer.display_name }}</b> <br />
+      <p>{{ channel.status }}</p>
+      <div class="queue-status" [ngClass]="{ active: settings.status, 'not-active': !settings?.status }">
+        <b>{{ settings.status ? 'Очередь запущена' : 'Очередь остановлена' }}</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="current-service">
+    <h2>Текущий сервис</h2>
+    <p *ngIf="!current">Нет активного сервиса</p>
+    <app-queue-item
+      *ngIf="current"
+      [name]="current.name"
+      [avatar]="current.avatar"
+      [text]="current.text"
+      [created]="current.created"
+    ></app-queue-item>
+    <button mat-flat-button color="primary" (click)="next()">
+      Следующая заявка
+    </button>
+    <button mat-flat-button color="primary">
+      История
+    </button>
+  </div>
+
+  <div class="settings">
+    <h2>Настройки очереди</h2>
+    <mat-slide-toggle [checked]="settings.onlyFollowers">Только для фолловеров</mat-slide-toggle>
+    <mat-slide-toggle [checked]="settings.subQueue">Отдельная очередь для сабов</mat-slide-toggle>
+    <br />
+    <button mat-flat-button [color]="settings.status ? 'warn' : 'accent'" (click)="toggleQueue()">
+      {{ settings.status ? 'Остановить очередь' : 'Запустить очередь' }}
+    </button>
+  </div>
+</div>

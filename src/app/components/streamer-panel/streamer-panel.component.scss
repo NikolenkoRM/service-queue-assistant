@@ -1,0 +1,58 @@
+.content > * {
+  background-color: whitesmoke;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  padding: 1em;
+  margin-bottom: 0.5em;
+}
+
+.streamer-info {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  margin-right: 2em;
+}
+
+.avatar > img {
+  max-height: 100px;
+  border-radius: 50%;
+}
+
+.name {
+  font-size: large;
+}
+
+.settings {
+  display: flex;
+  flex-direction: column;
+}
+
+.queue-status {
+  color: white;
+  padding: 0.5em;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.current-service {
+  display: flex;
+  flex-direction: column;
+}
+
+.current-service > button {
+  margin-top: 0.25em;
+}
+
+.current-service > app-queue-item {
+  margin-bottom: 1em;
+}
+
+.not-active {
+  background-color: #f44336;
+}
+
+.active {
+  background-color: #2b9a2d;
+}

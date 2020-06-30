@@ -1,0 +1,23 @@
+<div class="container" *ngIf="authService.user">
+  <div class="content">
+    <div class="panel">
+      <app-streamer-panel [settings]="queueService.settings" [current]="queueService.current"></app-streamer-panel>
+    </div>
+    <div class="queue">
+      <p *ngIf="!queueService.queue?.length">Очередь пуста</p>
+      <div class="queue-list" *ngIf="queueService.queue?.length">
+        <app-queue-item
+          *ngFor="let item of queueService.queue; let i = index"
+          [n]="i + 1"
+          [name]="item.name"
+          [avatar]="item.avatar"
+          [text]="item.text"
+          [created]="item.created"
+        ></app-queue-item>
+      </div>
+      <button mat-flat-button color="primary" [disabled]="!queueService.settings?.status" (click)="addInQueue()">
+        Записаться в очередь
+      </button>
+    </div>
+  </div>
+</div>
