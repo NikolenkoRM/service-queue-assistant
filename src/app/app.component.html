@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
   <h1>Service Queue Assistant</h1>
   <div class="login" *ngIf="authService.user">
-    <b>{{ authService.user.display_name }}</b>
+    <span>{{ authService.user.display_name }}</span>
     <img [src]="authService.user.logo" />
   </div>
 </mat-toolbar>

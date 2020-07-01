@@ -13,11 +13,11 @@ body {
 
 app-root {
   height: 100%;
+  width: 100%;
   display: block;
   overflow: hidden;
   min-width: 320px;
   max-width: 1200px;
-  flex: 1;
   border-left: 1px solid lightgray;
   border-right: 1px solid lightgray;
 }
