@@ -37,31 +37,49 @@ export class TwitchService {
     return this.channel;
   }
 
-  async checkSub() {
-    if (!this.sub) {
-      const headers = new HttpHeaders().set('Authorization', `OAuth ${this.authService.oAuthToken}`);
-      const sub = await this.http
-        .get(`https://api.twitch.tv/kraken/users/${this.authService.user._id}/subscriptions/${environment.streamer}`, {
-          headers,
-        })
-        .toPromise();
-      this.sub = sub;
-    }
+  checkSub(): Promise<boolean> {
+    return new Promise(async (resolve, reject) => {
+      if (this.sub === undefined) {
+        try {
+          const streamerChannel = await this.getStreamerChannel();
+          const headers = new HttpHeaders().set('Authorization', `OAuth ${this.authService.oAuthToken}`);
+          const sub = await this.http
+            .get(
+              `https://api.twitch.tv/kraken/users/${this.authService.user._id}/subscriptions/${streamerChannel._id}`,
+              {
+                headers,
+              }
+            )
+            .toPromise();
 
-    return this.sub;
+          this.sub = true;
+        } catch (error) {
+          this.sub = false;
+        }
+      }
+
+      resolve(this.sub);
+    });
   }
 
-  async checkFollow() {
-    if (!this.follow) {
-      const streamerChannel = await this.getStreamerChannel();
-      const follow = await this.http
-        .get(`https://api.twitch.tv/kraken/users/${this.authService.user._id}/follows/channels/${streamerChannel._id}`)
-        .toPromise();
+  checkFollow() {
+    return new Promise(async (resolve) => {
+      if (this.follow === undefined) {
+        try {
+          const streamerChannel = await this.getStreamerChannel();
+          const follow = await this.http
+            .get(
+              `https://api.twitch.tv/kraken/users/${this.authService.user._id}/follows/channels/${streamerChannel._id}`
+            )
+            .toPromise();
 
-      this.follow = follow;
-    }
+          this.follow = true;
+        } catch (error) {
+          this.follow = false;
+        }
+      }
 
-    console.log(this.follow);
-    return this.follow;
+      resolve(this.follow);
+    });
   }
 }

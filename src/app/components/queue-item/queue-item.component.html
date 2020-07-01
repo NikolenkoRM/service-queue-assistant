@@ -3,18 +3,15 @@
     <div class="info">
       <b *ngIf="n">{{ n }}</b>
       <div class="avatar">
-        <img [src]="avatar" />
+        <img [src]="data.avatar" />
       </div>
-      <b>{{ name }}</b>
+      <b>{{ data.poeNick }} ({{ data.twitchNick }})</b>
     </div>
     <button mat-icon-button color="warn" *ngIf="canRemove" (click)="remove()">
       <mat-icon>delete</mat-icon>
     </button>
   </div>
   <div class="desc">
-    <p>{{ text }}</p>
+    <p>{{ data.text }}</p>
   </div>
-  <!-- <div>
-    <span class="datetime">{{ created | date: 'dd.MM.yy HH:mm:ss' }}</span>
-  </div> -->
 </div>

@@ -15,28 +15,29 @@
   <div class="current-service">
     <h2>Текущий сервис</h2>
     <p *ngIf="!current">Нет активного сервиса</p>
-    <app-queue-item
-      *ngIf="current"
-      [id]="current.id"
-      [name]="current.name"
-      [avatar]="current.avatar"
-      [text]="current.text"
-      [created]="current.created"
-    ></app-queue-item>
-    <button mat-flat-button color="primary" (click)="next()">
+    <app-queue-item *ngIf="current" [data]="current"></app-queue-item>
+    <button mat-flat-button color="primary" (click)="next()" *ngIf="checkStreamer()">
       Следующий сервис
     </button>
-    <!-- <button mat-flat-button color="primary">
-      История
-    </button> -->
   </div>
 
   <div class="settings">
     <h2>Настройки очереди</h2>
-    <mat-slide-toggle [checked]="settings.onlyFollowers">Только для фолловеров</mat-slide-toggle>
-    <mat-slide-toggle [checked]="settings.subQueue">В первую очередь сабы</mat-slide-toggle>
+    <form [formGroup]="settingsForm">
+      <mat-slide-toggle (change)="onSettingsChange()" formControlName="onlyFollowers">
+        Только для фолловеров
+      </mat-slide-toggle>
+      <mat-slide-toggle (change)="onSettingsChange()" formControlName="subsFirst">
+        В первую очередь сабы
+      </mat-slide-toggle>
+    </form>
     <br />
-    <button mat-flat-button [color]="settings.status ? 'warn' : 'primary'" (click)="toggleQueue()">
+    <button
+      mat-flat-button
+      [color]="settings.status ? 'warn' : 'primary'"
+      *ngIf="checkStreamer()"
+      (click)="toggleQueue()"
+    >
       {{ settings.status ? 'Остановить очередь' : 'Запустить очередь' }}
     </button>
   </div>

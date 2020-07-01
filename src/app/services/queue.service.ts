@@ -18,10 +18,12 @@ export class QueueService {
   ) {
     this.getQueueSettings().subscribe((data) => {
       this.settings = data;
+      this.sortQueue();
     });
 
     this.getQueue().subscribe((data: any) => {
       this.queue = data;
+      this.sortQueue();
     });
 
     this.getCurrentService().subscribe((data) => {
@@ -29,19 +31,25 @@ export class QueueService {
     });
   }
 
-  async addInQueue(serviceText: string) {
-    if (await this.twitchService.checkFollow()) {
-      const id = this.firestore.createId();
-      const sub = await this.twitchService.checkSub();
-      return this.firestore.collection('queue').doc(id).set({
-        name: this.authService.user.display_name,
-        avatar: this.authService.user.logo,
-        text: serviceText,
-        created: firebase.firestore.FieldValue.serverTimestamp(),
-        sub: !sub.error,
-        id,
-      });
+  async addInQueue(poeNick: string, serviceText: string) {
+    if ((await this.checkCanReg()).length) {
+      return false;
     }
+
+    const id = this.firestore.createId();
+    const sub = await this.twitchService.checkSub();
+
+    await this.firestore.collection('queue').doc(id).set({
+      twitchNick: this.authService.user.display_name,
+      poeNick: poeNick.trim(),
+      avatar: this.authService.user.logo,
+      text: serviceText.trim(),
+      created: firebase.firestore.FieldValue.serverTimestamp(),
+      sub,
+      id,
+    });
+
+    return true;
   }
 
   getQueueSettings() {
@@ -85,10 +93,36 @@ export class QueueService {
   }
 
   sortQueue() {
-    if (this.settings.subQueue) {
-      this.queue = this.queue.sort((a, b) => {
-        return +(a.sub > b.sub) - 1;
-      });
+    if (!this.queue) {
+      return;
     }
+
+    this.queue = this.queue.sort((a, b) => {
+      return a.created?.seconds - b.created?.seconds;
+    });
+
+    if (this.settings.subsFirst) {
+      this.queue = this.queue
+        .sort((a: any, b: any) => {
+          return +(a.sub > b.sub) - 1;
+        })
+        .reverse();
+    }
+  }
+
+  saveSettings(settings: any) {
+    return this.firestore.collection('settings').doc('queue').update(settings);
+  }
+
+  async checkCanReg(): Promise<string[]> {
+    const reasons = [];
+    if (!this.settings.status) {
+      reasons.push('Запись в очередь остановлена');
+    }
+    if (this.settings.onlyFollowers && !(await this.twitchService.checkFollow())) {
+      reasons.push('Необходимо быть зафолловленным на канал');
+    }
+
+    return reasons;
   }
 }

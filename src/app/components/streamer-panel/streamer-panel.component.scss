@@ -24,7 +24,8 @@
   font-size: large;
 }
 
-.settings {
+.settings,
+.settings > form {
   display: flex;
   flex-direction: column;
 }

@@ -11,5 +11,5 @@ export const environment = {
     measurementId: 'G-GF6E7BB425',
   },
   twitchID: '83qjdabbkud345sjfyvpoxqekaw2zk',
-  channelID: 'D4rd4n',
+  streamer: 'D4rd4n',
 };

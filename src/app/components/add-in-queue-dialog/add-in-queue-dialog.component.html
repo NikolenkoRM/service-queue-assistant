@@ -2,12 +2,19 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
   <mat-dialog-content>
     <mat-form-field>
-      <mat-label>Описание услуги</mat-label>
+      <mat-label>Ник в POE</mat-label>
+      <input matInput autocomplete="off" formControlName="poeNick" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Что нужно сделать?</mat-label>
       <textarea
         #ta
         matInput
+        autocomplete="off"
         rows="8"
-        placeholder="Убить Сируса, добить Симулякр и т.д."
+        cols="100"
+        placeholder="Например, убить Сируса"
         formControlName="text"
       ></textarea>
     </mat-form-field>

@@ -16,13 +16,15 @@ export class AuthService {
     const headers = new HttpHeaders().set('Authorization', `OAuth ${this.oAuthToken}`);
     const user = await this.http.get(`https://api.twitch.tv/kraken/user`, { headers }).toPromise();
     this.user = user;
-    console.log(user);
     this.router.navigate(['']);
   }
 
   getOAuthToken(): Promise<string> {
     return new Promise((resolve, reject) => {
-      const url = `https://id.twitch.tv/oauth2/authorize?client_id=${environment.twitchID}&redirect_uri=http://localhost:4200/auth&response_type=token&scope=channel_subscriptions+user_subscriptions+user_read`;
+      const redirect = environment.production
+        ? 'https://service-queue-assistant.firebaseapp.com/auth'
+        : 'http://localhost:4200/auth';
+      const url = `https://id.twitch.tv/oauth2/authorize?client_id=${environment.twitchID}&redirect_uri=${redirect}&response_type=token&scope=channel_subscriptions+user_subscriptions+user_read`;
 
       const win = window.open(
         url,

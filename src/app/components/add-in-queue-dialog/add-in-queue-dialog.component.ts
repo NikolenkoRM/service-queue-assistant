@@ -9,9 +9,10 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class AddInQueueDialogComponent implements OnInit {
   form: FormGroup;
-  maxLength = 300;
+  maxLength = 100;
   constructor(public dialogRef: MatDialogRef<AddInQueueDialogComponent>) {
     this.form = new FormGroup({
+      poeNick: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
       text: new FormControl(null, [Validators.required, Validators.maxLength(this.maxLength)]),
     });
   }
