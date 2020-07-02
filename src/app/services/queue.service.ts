@@ -71,6 +71,7 @@ export class QueueService {
   async nextService() {
     if (this.current) {
       const ended = firebase.firestore.FieldValue.serverTimestamp();
+
       await this.firestore
         .collection('history')
         .doc(this.current.id)
@@ -81,7 +82,7 @@ export class QueueService {
 
     const nextService = this.queue[0];
     if (nextService) {
-      await this.firestore.collection('current').doc('current').set(nextService);
+      this.firestore.collection('current').doc('current').set(nextService);
       await this.removeQueueItem(nextService.id);
     }
 
