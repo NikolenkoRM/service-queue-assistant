@@ -34,6 +34,7 @@ export class QueuePanelComponent implements OnInit {
     }
 
     this.twitchService.getStreamer();
+    this.queueService.calculateAvgTime();
   }
 
   async addInQueue() {

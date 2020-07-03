@@ -22,7 +22,7 @@ export class AuthService {
   getOAuthToken(): Promise<string> {
     return new Promise((resolve, reject) => {
       const redirect = environment.production
-        ? 'https://service-queue-assistant.firebaseapp.com/auth'
+        ? 'https://service-queue-assistant.web.app/auth'
         : 'http://localhost:4200/auth';
       const url = `https://id.twitch.tv/oauth2/authorize?client_id=${environment.twitchID}&redirect_uri=${redirect}&response_type=token&scope=channel_subscriptions+user_subscriptions+user_read`;
 

@@ -11,6 +11,9 @@ export class QueueService {
   settings: any;
   queue: any;
   current: any;
+  avgDuration: number = 0;
+  queueDuration: number = 0;
+
   constructor(
     private firestore: AngularFirestore,
     private authService: AuthService,
@@ -24,10 +27,24 @@ export class QueueService {
     this.getQueue().subscribe((data: any) => {
       this.queue = data;
       this.sortQueue();
+      this.calculateQueueDuration();
     });
 
     this.getCurrentService().subscribe((data) => {
       this.current = data;
+    });
+
+    this.calculateAvgTime().subscribe((data) => {
+      let totalDuration = 0;
+      data.forEach((item: any) => {
+        if (item.ended && item.created) {
+          totalDuration += item.ended.seconds - item.created.seconds;
+        }
+      });
+
+      const avgDuration = totalDuration / data.length / 60;
+      this.avgDuration = avgDuration;
+      this.calculateQueueDuration();
     });
   }
 
@@ -120,10 +137,29 @@ export class QueueService {
     if (!this.settings.status) {
       reasons.push('Запись в очередь остановлена');
     }
+
     if (this.settings.onlyFollowers && !(await this.twitchService.checkFollow())) {
       reasons.push('Необходимо быть зафолловленным на канал');
     }
 
+    if (this.settings.maxLength && this.queue?.length >= this.settings.maxLength) {
+      reasons.push('Превышен лимит записей на сервис');
+    }
+
+    if (this.settings.maxDuration && this.queueDuration >= this.settings.maxDuration) {
+      reasons.push('Превышен лимит записей на сервис');
+    }
+
     return reasons;
+  }
+
+  calculateAvgTime() {
+    return this.firestore.collection('history', (ref) => ref.limit(10)).valueChanges();
+  }
+
+  calculateQueueDuration() {
+    if (this.avgDuration) {
+      this.queueDuration = this.queue?.length * this.avgDuration;
+    }
   }
 }

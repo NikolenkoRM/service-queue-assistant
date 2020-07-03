@@ -60,3 +60,9 @@
 .active {
   background-color: #2b9a2d;
 }
+
+.settings > form > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

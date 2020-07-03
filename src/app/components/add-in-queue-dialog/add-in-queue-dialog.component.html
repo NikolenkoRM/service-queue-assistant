@@ -19,6 +19,10 @@
       ></textarea>
     </mat-form-field>
     <mat-hint>{{ ta.value.length }} / {{ maxLength }}</mat-hint>
+    <p style="text-align: center; color: gray;">
+      Время ожидания: ~{{ queueService.queueDuration | number: '1.0-0' }}
+      мин.
+    </p>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-flat-button mat-dialog-close>Отмена</button>

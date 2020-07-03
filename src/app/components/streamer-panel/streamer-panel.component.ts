@@ -19,7 +19,7 @@ export class StreamerPanelComponent implements OnInit {
   settingsForm: FormGroup;
   constructor(
     private twitchService: TwitchService,
-    private queueService: QueueService,
+    public queueService: QueueService,
     private authService: AuthService
   ) {}
 
@@ -27,6 +27,8 @@ export class StreamerPanelComponent implements OnInit {
     this.settingsForm = new FormGroup({
       onlyFollowers: new FormControl(this.settings.onlyFollowers),
       subsFirst: new FormControl(this.settings.subsFirst),
+      maxLength: new FormControl(this.settings.maxLength),
+      maxDuration: new FormControl(this.settings.maxDuration),
     });
 
     if (!this.checkStreamer()) {

@@ -9,6 +9,9 @@
       <div class="queue-status" [ngClass]="{ active: settings.status, 'not-active': !settings?.status }">
         <b>{{ settings.status ? 'Очередь запущена' : 'Очередь остановлена' }}</b>
       </div>
+      <br />
+      <div style="color: gray;">Среднее время на сервис: ~{{ queueService.avgDuration | number: '1.0-0' }} мин.</div>
+      <div style="color: gray;">Длительность очереди: ~{{ queueService.queueDuration | number: '1.0-0' }} мин.</div>
     </div>
   </div>
 
@@ -30,6 +33,24 @@
       <mat-slide-toggle (change)="onSettingsChange()" formControlName="subsFirst">
         В первую очередь сабы
       </mat-slide-toggle>
+      <div>
+        <label for="queueLength">Макс. человек в очереди: </label>
+        <mat-form-field id="queueLength">
+          <input matInput type="number" autocomplete="off" formControlName="maxLength" (change)="onSettingsChange()" />
+        </mat-form-field>
+      </div>
+      <div>
+        <label for="queueDuration">Макс. длительность очереди (мин.): </label>
+        <mat-form-field id="queueDuration">
+          <input
+            matInput
+            type="number"
+            autocomplete="off"
+            formControlName="maxDuration"
+            (change)="onSettingsChange()"
+          />
+        </mat-form-field>
+      </div>
     </form>
     <br />
     <button
